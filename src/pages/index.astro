@@ -1,0 +1,125 @@
+---
+import '../styles/global.css';
+import {
+  profile, interests, news, publications, me, experience, education,
+} from '../data/site';
+
+const description = 'Yair Amar: research on deep learning for speech and on coding agents under security policy.';
+const initials = profile.name.split(' ').map((p) => p[0]).join('');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{profile.name}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={profile.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="profile">
+        {profile.headshot ? (
+          <img class="headshot" src={profile.headshot} alt={`Portrait of ${profile.name}`} width="176" height="176" />
+        ) : (
+          <div class="headshot placeholder" aria-hidden="true">{initials}</div>
+        )}
+        <h1>{profile.name}</h1>
+        <p class="title">{profile.title}</p>
+        <ul class="links">
+          {profile.links.map((l) => (
+            <li><span class="label">{l.label}</span><a href={l.href}>{l.text}</a></li>
+          ))}
+        </ul>
+      </aside>
+
+      <main>
+        <section id="about">
+          {profile.bio.map((p) => <p>{p}</p>)}
+        </section>
+
+        <section id="interests">
+          <h2>Research interests</h2>
+          <ul class="chips">
+            {interests.map((i) => <li>{i}</li>)}
+          </ul>
+        </section>
+
+        <section id="news">
+          <h2>News</h2>
+          <ul class="news">
+            {news.map((n) => (
+              <li><span class="date">{n.date}</span><span set:html={n.html} /></li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="publications">
+          <h2>Publications</h2>
+          <ol class="pubs">
+            {publications.map((p) => (
+              <li>
+                <p class="pub-title">{p.title}</p>
+                <p class="authors">
+                  {p.authors.map((a, i) => (
+                    <>
+                      {a.replace('*', '') === me ? <strong>{a}</strong> : a}
+                      {i < p.authors.length - 1 ? ', ' : ''}
+                    </>
+                  ))}
+                </p>
+                <p class="venue">{p.venue}, {p.year}</p>
+                {p.note && <p class="note">{p.note}</p>}
+                <p class="pub-links">
+                  {p.links.map((l) => <a href={l.href}>{l.label}</a>)}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="experience">
+          <h2>Experience</h2>
+          <ul class="entries">
+            {experience.map((e) => (
+              <li>
+                <div class="entry-head">
+                  <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
+                  {e.when && <span class="when">{e.when}</span>}
+                </div>
+                {e.detail && <p class="detail">{e.detail}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="education">
+          <h2>Education</h2>
+          <ul class="entries">
+            {education.map((e) => (
+              <li>
+                <div class="entry-head">
+                  <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
+                  {e.when && <span class="when">{e.when}</span>}
+                </div>
+                {e.detail && <p class="detail">{e.detail}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <footer>Last updated {new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</footer>
+      </main>
+    </div>
+  </body>
+</html>
