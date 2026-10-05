@@ -51,7 +51,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
         <section id="interests">
           <h2>Research interests</h2>
           <ul class="chips">
-            {interests.map((i) => <li>{i}</li>)}
+            {interests.map((i) => <li>{i.href ? <a href={i.href}>{i.label}</a> : <span>{i.label}</span>}</li>)}
           </ul>
         </section>
 

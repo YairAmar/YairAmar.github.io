@@ -16,10 +16,11 @@ export const profile = {
   ],
 };
 
-export const interests = [
-  'Deep learning for speech',
-  'AI agents and coding agents',
-  'Self-improving agents',
+// Each interest links to related work. Leave href out to show a plain chip.
+export const interests: { label: string; href?: string }[] = [
+  { label: 'Deep learning for speech', href: 'https://arxiv.org/abs/2512.00482' },
+  { label: 'AI agents and coding agents', href: 'https://arxiv.org/abs/2608.02670' },
+  { label: 'Self-improving agents' },
 ];
 
 export type NewsItem = { date: string; html: string };

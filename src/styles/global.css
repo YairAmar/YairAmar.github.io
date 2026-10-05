@@ -102,14 +102,18 @@ h2 {
 }
 
 .chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.chips li {
+.chips li > * {
+  display: inline-block;
   background: var(--accent-soft);
   color: var(--accent);
   padding: 5px 14px;
+  border: 1px solid transparent;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 500;
 }
+.chips a::after { content: ' \2197'; font-size: 12px; }
+.chips a:hover { border-color: var(--accent); text-decoration: none; }
 
 .news { list-style: none; padding: 0; margin: 0; }
 .news li { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 7px 0; }
