@@ -207,6 +207,7 @@ h2 {
 .pub-links a:hover { border-color: var(--accent); text-decoration: none; }
 .pub-links a { display: inline-flex; align-items: center; gap: 5px; }
 .pub-icon { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+img.pub-icon { width: 14px; height: 14px; border-radius: 3px; }
 .pub-links a.arxiv .pub-icon { fill: #b31b1b; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .pub-links a.arxiv .pub-icon { fill: #e06666; } }
 :root[data-theme='dark'] .pub-links a.arxiv .pub-icon { fill: #e06666; }

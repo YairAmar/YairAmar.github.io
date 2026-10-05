@@ -177,7 +177,8 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
                 <p class="pub-links">
                   {p.links.map((l) => (
                     <a href={l.href} class={l.label === 'arXiv' ? 'arxiv' : undefined}>
-                      {pubIcons[l.label] && <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={pubIcons[l.label]} /></svg>}
+                      {l.icon ? <img class="pub-icon" src={l.icon} alt="" width="13" height="13" />
+                        : pubIcons[l.label] && <svg class="pub-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={pubIcons[l.label]} /></svg>}
                       {l.label}
                     </a>
                   ))}

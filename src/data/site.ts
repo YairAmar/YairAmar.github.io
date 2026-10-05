@@ -70,7 +70,7 @@ export const news: NewsItem[] = [
   },
 ];
 
-export type Link = { label: string; href: string };
+export type Link = { label: string; href: string; icon?: string }; // icon: image path shown in the button
 export type Publication = {
   id: string;
   summary: string; // one plain sentence, always visible; click reveals the abstract
@@ -98,7 +98,7 @@ export const publications: Publication[] = [
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2608.02670' },
       { label: 'Code', href: 'https://github.com/boundary-bench/boundary-bench' },
-      { label: 'Website', href: 'https://boundarybench.com/' },
+      { label: 'Website', href: 'https://boundarybench.com/', icon: '/logos/boundary-bench.svg' },
     ],
   },
   {
