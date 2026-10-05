@@ -34,7 +34,16 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
   </head>
   <body>
     <div class="backdrop" aria-hidden="true">
-      <img id="pano" src="/hike.webp" alt="" width="1600" height="381" />
+      <img
+        id="pano"
+        src="/hike-1080.webp"
+        srcset="/hike-1080.webp 4527w, /hike-1600.webp 6707w"
+        sizes="calc(419vh + 170px)"
+        alt=""
+        width="4527"
+        height="1080"
+        fetchpriority="high"
+      />
     </div>
     <div class="layout">
       <aside class="profile">
