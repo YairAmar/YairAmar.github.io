@@ -72,18 +72,8 @@ export const publications: Publication[] = [
     title: 'The Hardening Tax: Policy-Graded Evaluation of Coding Agents under Enterprise Security Constraints',
     authors: ['Yair Amar*', 'Dotan Davidovich*', 'Hai Rozencwajg*', 'Or Hiltch', 'Ravid Shwartz-Ziv'],
     venue: 'NeurIPS 2026 Workshop on Agents in the Wild',
-    note: '* Equal contribution',
     year: 2026,
-    links: [
-      { label: 'Code', href: 'https://github.com/boundary-bench/boundary-bench' },
-      { label: 'Website', href: 'https://boundarybench.com/' },
-    ],
-  },
-  {
-    title: 'Permission Denied: Policy-Graded Evaluation of Coding Agents in Hardened Environments',
-    authors: ['Dotan Davidovich', 'Yair Amar', 'Hai Rozencwajg', 'Or Hiltch'],
-    venue: 'arXiv preprint arXiv:2608.02670',
-    year: 2026,
+    note: '* Equal contribution. Extended version on arXiv as "Permission Denied: Policy-Graded Evaluation of Coding Agents in Hardened Environments".',
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2608.02670' },
       { label: 'Code', href: 'https://github.com/boundary-bench/boundary-bench' },
