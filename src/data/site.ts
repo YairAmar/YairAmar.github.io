@@ -121,8 +121,8 @@ export const experience: Entry[] = [
   },
   {
     title: 'Data Scientist',
-    org: 'Defence',
-    when: '',
+    org: 'Defence industry',
+    when: '2020 to 2026',
   },
 ];
 
