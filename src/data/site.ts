@@ -18,6 +18,12 @@ export const profile = {
 };
 
 // Each interest jumps to the related publication on this page (its id). Leave href out to show a plain chip.
+// Names that get linked to a personal website wherever they appear on the page.
+export const people: Record<string, string> = {
+  'Amir Ivry': 'https://amir-ivry.github.io/',
+  'Israel Cohen': 'https://israelcohen.com/',
+};
+
 export const interests: { label: string; href?: string }[] = [
   { label: 'Deep learning for speech', href: '#speech-probing' },
   { label: 'AI agents and coding agents', href: '#hardening-tax' },

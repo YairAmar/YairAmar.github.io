@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import {
-  profile, interests, news, publications, me, experience, education,
+  profile, interests, news, publications, me, experience, education, people,
 } from '../data/site';
 
 const description = 'Yair Amar: research on deep learning for speech and on coding agents under security policy.';
@@ -12,6 +12,10 @@ const icons: Record<string, string> = {
   'Google Scholar': 'M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14Zm0-24L0 9.5l4.9 3.99A7.97 7.97 0 0 1 12 9c3 0 5.62 1.66 7.1 4.49L24 9.5 12 0Z',
   LinkedIn: 'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z',
 };
+// Wrap known names in links to their websites.
+const linkPeople = (text: string) =>
+  Object.entries(people).reduce((t, [name, url]) => t.replaceAll(name, `<a href="${url}">${name}</a>`), text);
+
 const initials = profile.name.split(' ').map((p) => p[0]).join('');
 ---
 
@@ -67,7 +71,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
 
       <main>
         <section id="about">
-          {profile.bio.map((p) => <p>{p}</p>)}
+          {profile.bio.map((p) => <p set:html={linkPeople(p)} />)}
         </section>
 
         <section id="interests">
@@ -81,7 +85,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <h2>News</h2>
           <ul class="news">
             {news.map((n) => (
-              <li><span class="date">{n.date}</span><span set:html={n.html} /></li>
+              <li><span class="date">{n.date}</span><span set:html={linkPeople(n.html)} /></li>
             ))}
           </ul>
         </section>
@@ -95,7 +99,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
                 <p class="authors">
                   {p.authors.map((a, i) => (
                     <>
-                      {a.replace('*', '') === me ? <strong>{a}</strong> : a}
+                      {a.replace('*', '') === me ? <strong>{a}</strong> : people[a] ? <a href={people[a]}>{a}</a> : a}
                       {i < p.authors.length - 1 ? ', ' : ''}
                     </>
                   ))}
@@ -121,7 +125,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
                     <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
                     {e.when && <span class="when">{e.when}</span>}
                   </div>
-                  {e.detail && <p class="detail">{e.detail}</p>}
+                  {e.detail && <p class="detail" set:html={linkPeople(e.detail)} />}
                 </div>
               </li>
             ))}
@@ -139,7 +143,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
                     <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
                     {e.when && <span class="when">{e.when}</span>}
                   </div>
-                  {e.detail && <p class="detail">{e.detail}</p>}
+                  {e.detail && <p class="detail" set:html={linkPeople(e.detail)} />}
                 </div>
               </li>
             ))}
