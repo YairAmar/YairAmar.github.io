@@ -123,7 +123,7 @@ export const experience: Entry[] = [
     title: 'Senior Research Scientist',
     org: 'Innovation Center, Sheba Medical Center',
     icon: '/logos/sheba.png',
-    when: 'Until Mar 2026',
+    when: 'Aug 2024 to Mar 2026',
     detail: 'Machine learning on medical data.',
   },
   {
