@@ -119,8 +119,8 @@ h1 {
 .title { color: var(--muted); font-size: 14.5px; margin: 0 0 24px; }
 
 .links { list-style: none; padding: 0; margin: 0; font-size: 14.5px; }
-.links li { display: flex; gap: 12px; padding: 4px 0; }
-.links .label { color: var(--muted); width: 64px; flex-shrink: 0; }
+.links li { display: flex; align-items: center; gap: 12px; padding: 4px 0; }
+.link-icon { width: 18px; height: 18px; flex-shrink: 0; fill: var(--muted); }
 .links a { overflow-wrap: anywhere; }
 
 /* Main column */

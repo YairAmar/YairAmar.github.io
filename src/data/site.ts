@@ -12,7 +12,7 @@ export const profile = {
   links: [
     { label: 'Email', href: 'mailto:yairamr@gmail.com', text: 'yairamr@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/YairAmar', text: 'YairAmar' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yair-amar-b65b62144/', text: 'LinkedIn' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yair-amar-b65b62144/', text: 'yair-amar' },
   ],
 };
 
