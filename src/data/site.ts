@@ -6,8 +6,8 @@ export const profile = {
   // Put a square image at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: '/headshot.jpg' as string | null,
   bio: [
-    'I thrive in fast-moving environments, love getting into new subjects, and care about work with real impact. I am a Technion graduate in Electrical Engineering and Physics. I am a team player who enjoys working with bright, quick-thinking people.',
-    'Today I am a Member of Technical Staff at Accomplish, where I study coding agents under enterprise security policy. I am also an MSc student at the Technion, advised by Dr. Amir Ivry and Prof. Israel Cohen, probing the internals of speech enhancement models. My path ran from the defence industry to speech, then medical data at Sheba, and now coding agents.',
+    "Hey! I'm a research scientist with a record of delivering results across disciplines, from the defence and health industries to speech technology and coding agents. I get deep satisfaction from making things work. I'm naturally curious and never short on new ideas.",
+    'I\'m an early member of the technical staff at <a href="https://accomplish.ai">Accomplish</a>, where I work on AI agent enablement, with the goal of safe and performant agents at scale. I\'m also pursuing my MSc at the Technion under the guidance of Dr. Amir Ivry and Prof. Israel Cohen, focused on probing speech enhancement models.',
   ],
   links: [
     { label: 'Email', href: 'mailto:yairamr@gmail.com', text: 'yairamr@gmail.com' },
