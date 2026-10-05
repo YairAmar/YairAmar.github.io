@@ -6,7 +6,7 @@
   --border: #e2dfd7;
   --accent: #1f4e79;
   --accent-soft: #e4edf6;
-  --card: rgba(251, 250, 247, 0.72);
+  --card: rgba(251, 250, 247, 0.8);
   --technion: #1f4e79;
   --technion-soft: #e4edf6;
   --accomplish: #2f6b4f;
@@ -27,7 +27,7 @@
     --border: #2c2f33;
     --accent: #8fb8e0;
     --accent-soft: #1d2a37;
-    --card: rgba(19, 20, 22, 0.7);
+    --card: rgba(19, 20, 22, 0.78);
     --technion: #8fb8e0;
     --technion-soft: #1d2a37;
     --accomplish: #8fd1ae;
@@ -37,7 +37,7 @@
 }
 
 :root[data-theme='dark'] {
-  --card: rgba(19, 20, 22, 0.7);
+  --card: rgba(19, 20, 22, 0.78);
   --technion: #8fb8e0;
   --technion-soft: #1d2a37;
   --accomplish: #8fd1ae;
