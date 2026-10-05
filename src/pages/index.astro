@@ -80,7 +80,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <h2>News</h2>
           <ul class="news">
             {news.map((n) => (
-              <li><span class="date">{n.date}</span><span><span class={`tag tag-${n.tag.toLowerCase()}`}>{n.tag}</span> <span set:html={n.html} /></span></li>
+              <li><span class="date">{n.date}</span><span set:html={n.html} /></li>
             ))}
           </ul>
         </section>
@@ -131,12 +131,15 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <h2>Education</h2>
           <ul class="entries">
             {education.map((e) => (
-              <li>
-                <div class="entry-head">
-                  <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
-                  {e.when && <span class="when">{e.when}</span>}
+              <li class="with-icon">
+                <span class="entry-icon">{e.icon && <img src={e.icon} alt="" width="40" height="40" loading="lazy" />}</span>
+                <div class="entry-body">
+                  <div class="entry-head">
+                    <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
+                    {e.when && <span class="when">{e.when}</span>}
+                  </div>
+                  {e.detail && <p class="detail">{e.detail}</p>}
                 </div>
-                {e.detail && <p class="detail">{e.detail}</p>}
               </li>
             ))}
           </ul>

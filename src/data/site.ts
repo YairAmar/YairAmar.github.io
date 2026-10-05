@@ -22,43 +22,35 @@ export const interests: { label: string; href?: string }[] = [
   { label: 'AI agents and coding agents', href: '#hardening-tax' },
 ];
 
-// tag marks which line of work an item belongs to.
-export type NewsItem = { date: string; tag: 'Technion' | 'Accomplish'; html: string };
+export type NewsItem = { date: string; html: string };
 
 export const news: NewsItem[] = [
   {
     date: 'Sep 2026',
-    tag: 'Accomplish',
     html: '<em>The Hardening Tax</em> was accepted to the NeurIPS 2026 Workshop on Agents in the Wild. See you in Sydney in December.',
   },
   {
     date: 'Sep 2026',
-    tag: 'Technion',
     html: 'Our speech enhancement probing paper is under review at IEEE TASLP. The updated preprint is on <a href="https://arxiv.org/abs/2512.00482">arXiv</a>.',
   },
   {
     date: 'Aug 2026',
-    tag: 'Accomplish',
     html: '<a href="https://arxiv.org/abs/2608.02670"><em>Permission Denied</em></a> is on arXiv, and we open-sourced <a href="https://github.com/boundary-bench/boundary-bench">Boundary-Bench</a> for evaluating coding agents under security policy.',
   },
   {
     date: 'May 2026',
-    tag: 'Technion',
     html: 'Presented our Show &amp; Tell demo, <em>Speech Enhancement Intelligence</em>, at ICASSP 2026 in Barcelona. Try the <a href="https://yairamar.github.io/seint-show-web/">interactive version</a>.',
   },
   {
     date: 'Mar 2026',
-    tag: 'Accomplish',
     html: 'Joined <a href="https://accomplish.ai">Accomplish</a> as a Member of Technical Staff, working on coding agents under enterprise security policy.',
   },
   {
     date: 'Nov 2025',
-    tag: 'Technion',
     html: 'First preprint on arXiv: <a href="https://arxiv.org/abs/2512.00482">probing layer-wise robustness and sensitivity of speech enhancement models</a>.',
   },
   {
     date: '2024',
-    tag: 'Technion',
     html: 'Started my MSc in Electrical Engineering at the Technion with Dr. Amir Ivry and Prof. Israel Cohen.',
   },
 ];
@@ -145,12 +137,14 @@ export const education: Entry[] = [
   {
     title: 'MSc, Electrical Engineering',
     org: 'Technion, Israel Institute of Technology',
+    icon: '/logos/technion.png',
     when: '2024 to present (expected 2027)',
     detail: 'Advisors: Dr. Amir Ivry and Prof. Israel Cohen.',
   },
   {
     title: 'BSc, Electrical Engineering and Physics',
     org: 'Technion, Israel Institute of Technology',
+    icon: '/logos/technion.png',
     when: '2016 to 2020',
   },
 ];
