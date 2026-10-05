@@ -1,5 +1,13 @@
 // All page content lives here. Edit this file to update the site.
 
+export const seo = {
+  url: 'https://yairamar.github.io/',
+  title: 'Yair Amar | Research Scientist, Speech and AI Agents',
+  description: 'Yair Amar is a research scientist at Accomplish working on safe, performant AI coding agents, and a Technion MSc student probing speech enhancement models.',
+  ogImage: '/og.jpg',
+  knowsAbout: ['Speech enhancement', 'Deep learning', 'Interpretability', 'AI agents', 'Coding agents', 'Agent security', 'Benchmarking'],
+};
+
 export const profile = {
   name: 'Yair Amar',
   title: ['Member of Technical Staff, Accomplish', 'MSc student, Technion'],
@@ -65,6 +73,8 @@ export const news: NewsItem[] = [
 export type Link = { label: string; href: string };
 export type Publication = {
   id: string;
+  summary: string; // one plain sentence, always visible; click reveals the abstract
+  abstract: string; // HTML
   title: string;
   authors: string[];
   venue: string;
@@ -78,6 +88,8 @@ export const me = 'Yair Amar';
 export const publications: Publication[] = [
   {
     id: 'hardening-tax',
+    summary: 'Enterprise security policy costs coding agents up to 18.3 points of success and 167.3% more cost on Terminal-Bench 2.1, and the best model depends on the policy.',
+    abstract: 'Coding agents increasingly run inside organizations whose security controls (scoped credentials, restricted egress, read-only filesystems, non-root execution) constrain them like any other software. Existing benchmarks, however, evaluate agents almost exclusively in permissive sandboxes, so it is unknown how performance changes when policy is enforced. In this work, we evaluate 12 coding agents on Terminal-Bench 2.1 across nested security policy levels derived from common real-world enterprise restrictions. Hardening is never free but far from uniform: under the strictest policy, success losses reach 18.3 points and cost inflation 167.3%, and the two axes disagree; the model that best preserves success is also the one that loses the most efficiency, so model choice is policy-dependent. Beyond aggregate scores, we characterize how agents behave when policy blocks their actions and decompose the failures hardening induces: runs grind into timeouts or wrong solutions rather than stopping early, in a mix that differs by model. To ground comparisons, we verify task solvability under the strictest policy, separating model failures from tasks the policy forecloses. We release Boundary-Bench, an open-source hardening plugin enabling policy-constrained evaluation of coding agents on Terminal-Bench and compatible benchmarks.',
     title: 'The Hardening Tax: Policy-Graded Evaluation of Coding Agents under Enterprise Security Constraints',
     authors: ['Yair Amar*', 'Dotan Davidovich*', 'Hai Rozencwajg*', 'Or Hiltch', 'Ravid Shwartz-Ziv'],
     venue: 'NeurIPS 2026 Workshop on Agents in the Wild',
@@ -91,6 +103,8 @@ export const publications: Publication[] = [
   },
   {
     id: 'speech-probing',
+    summary: 'A layer-by-layer probe of three speech enhancement models shows where each is robust or sensitive to noise and reverberation, and that this profile is learned during training.',
+    abstract: 'Speech enhancement (SE) models advance rapidly, yet how input degradation affects their internal representations remains underexplored. We introduce a probing framework to characterize how internal representations in SE models behave under controlled input degradation. We probe three SE models across controlled levels of signal-to-noise ratio (SNR) and reverberation, quantified by C<sub>50</sub>, measuring layer-wise similarity to clean references with Centered Kernel Alignment (CKA) and summarizing each layer by a linear fit against degradation level: the intercept measures robustness, whereas the slope measures sensitivity. All three models are sharply non-uniform across depth, but they organize that non-uniformity differently. MUSE and MP-SENet grow more sensitive with depth, the sharpest transitions falling at MUSE\'s skip-connection junctions, where encoder information is reintegrated; Demucs inverts the trend. A randomly initialized model shows a near-flat profile, with slopes one to two orders of magnitude smaller, and the profile forms during fine-tuning, indicating that it is induced by the enhancement objective rather than a particular model design. Because CKA saturates at the clean reference, intercept and slope are partly coupled; we derive the identity relating them and report a <em>saturation spread</em> statistic that indicates when their relationship is informative. Together, these results characterize where SE models are most sensitive to degradation. An exploratory analysis of whether residual variation tracks output-level quality, after controlling for SNR, shows that the speaker, rather than the utterance, must be treated as the sampling unit. Code and precomputed analysis artifacts for the main sweeps are publicly available.',
     title: 'Probing Layer-Wise Robustness and Sensitivity of Speech Enhancement Models',
     authors: ['Yair Amar', 'Amir Ivry', 'Israel Cohen'],
     venue: 'arXiv preprint arXiv:2512.00482',
@@ -104,6 +118,8 @@ export const publications: Publication[] = [
   },
   {
     id: 'icassp-demo',
+    summary: 'A live demo: speak into a microphone, add noise with a slider, and watch how a speech enhancement model\'s internal layers react alongside PESQ, STOI, and SI-SDR.',
+    abstract: 'This demonstration presents an interactive system for speech enhancement intelligence: observing, probing, and interpreting how a speech enhancement model responds as noise conditions change. Rather than treating the model as a black box, the demo provides an interface that exposes how internal representations evolve under increasing noise, controlled by the user. Attendees begin by speaking a short utterance into a microphone. This recording is treated as a clean reference. Artificial noise is then added in a controlled manner using an SNR slider, allowing users to smoothly move from clean to highly noisy conditions while keeping the underlying speech fixed. At each noise level, the clean and noisy signals are processed through a speech enhancement model, and internal activations from selected layers are extracted. The interface visualizes how the activations evolve under increasing noise and evaluates how closely the model\'s representations under noise resemble those elicited by clean speech. These similarities are shown layer by layer using Centered Kernel Alignment (CKA), revealing which parts of the model remain stable, which become noise-sensitive, and which recover as noise conditions improve. These measures are summarized via linearization of the CKA versus SNR trend. Alongside these internal indicators, standard enhancement performance metrics such as PESQ, STOI, and SI-SDR are updated in real time. By interacting with the noise controls, attendees can observe how internal representation stability degrades and recovers, and how these internal changes align with variations in output quality. This enables inspection of model behavior beyond post-hoc evaluation of enhanced signals alone. The demo offers an intuitive, hands-on view of how speech enhancement models internally respond to noise. It is relevant to the ICASSP community, as it illustrates how signal processing, learning-based models, and interpretability tools can be combined to better understand the internal behavior of modern speech systems.',
     title: 'Speech Enhancement Intelligence: Inspecting a Model Under Controlled Degradation',
     authors: ['Yair Amar', 'Amir Ivry', 'Israel Cohen'],
     venue: 'ICASSP 2026 Show & Tell demo, Barcelona',

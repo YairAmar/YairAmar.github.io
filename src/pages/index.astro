@@ -1,10 +1,9 @@
 ---
 import '../styles/global.css';
 import {
-  profile, interests, news, publications, me, experience, education, people,
+  profile, interests, news, publications, me, experience, education, people, seo,
 } from '../data/site';
 
-const description = 'Yair Amar: research on deep learning for speech and on coding agents under security policy.';
 // 24x24 icon paths for the contact links, keyed by link label.
 const icons: Record<string, string> = {
   Email: 'M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1 2.4V17h16V7.4l-8 5.3-8-5.3ZM5.6 7 12 11.3 18.4 7H5.6Z',
@@ -22,6 +21,45 @@ const pubIcons: Record<string, string> = {
   Code: icons.GitHub,
 };
 
+// Structured data so search and AI engines can tie the profiles and papers to one person.
+const abs = (path: string) => new URL(path, seo.url).href;
+const linkOf = (label: string) => profile.links.find((l) => l.label === label)?.href;
+const stripTags = (html: string) => html.replace(/<[^>]+>/g, '');
+const author = (name: string) => {
+  const n = name.replace('*', '');
+  return n === me ? { '@id': `${seo.url}#person` } : { '@type': 'Person', name: n, ...(people[n] && { url: people[n] }) };
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${seo.url}#person`,
+      name: profile.name,
+      url: seo.url,
+      image: abs(profile.headshot ?? seo.ogImage),
+      email: linkOf('Email'),
+      jobTitle: 'Member of Technical Staff',
+      description: seo.description,
+      worksFor: { '@type': 'Organization', name: 'Accomplish', url: 'https://accomplish.ai' },
+      affiliation: { '@type': 'CollegeOrUniversity', name: 'Technion, Israel Institute of Technology', url: 'https://www.technion.ac.il' },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Technion, Israel Institute of Technology' },
+      knowsAbout: seo.knowsAbout,
+      sameAs: ['GitHub', 'LinkedIn', 'Google Scholar'].map(linkOf).filter(Boolean),
+    },
+    ...publications.map((p) => ({
+      '@type': 'ScholarlyArticle',
+      '@id': `${seo.url}#${p.id}`,
+      headline: p.title,
+      abstract: stripTags(p.abstract),
+      author: p.authors.map(author),
+      datePublished: String(p.year),
+      isPartOf: p.venue,
+      url: p.links.find((l) => l.label === 'arXiv')?.href ?? p.links[0]?.href,
+    })),
+  ],
+};
+
 const initials = profile.name.split(' ').map((p) => p[0]).join('');
 ---
 
@@ -30,12 +68,32 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{profile.name}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={profile.name} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={seo.url} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={seo.url} />
+    <meta property="og:image" content={abs(seo.ogImage)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name}, ${profile.title.join(', ')}`} />
+    <meta property="profile:first_name" content="Yair" />
+    <meta property="profile:last_name" content="Amar" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={abs(seo.ogImage)} />
+    <meta name="theme-color" content="#1f4e79" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -112,6 +170,10 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
                 </p>
                 <p class="venue">{p.venue}, {p.year}</p>
                 {p.note && <p class="note">{p.note}</p>}
+                <details class="abstract">
+                  <summary><span class="summary-text">{p.summary}</span> <span class="toggle">Abstract</span></summary>
+                  <p set:html={p.abstract} />
+                </details>
                 <p class="pub-links">
                   {p.links.map((l) => (
                     <a href={l.href} class={l.label === 'arXiv' ? 'arxiv' : undefined}>
