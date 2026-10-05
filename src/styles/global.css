@@ -179,6 +179,11 @@ h2 {
   border-radius: 6px;
 }
 .pub-links a:hover { border-color: var(--accent); text-decoration: none; }
+.pub-links a { display: inline-flex; align-items: center; gap: 5px; }
+.pub-icon { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+.pub-links a.arxiv .pub-icon { fill: #b31b1b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .pub-links a.arxiv .pub-icon { fill: #e06666; } }
+:root[data-theme='dark'] .pub-links a.arxiv .pub-icon { fill: #e06666; }
 
 .entries { list-style: none; padding: 0; margin: 0; }
 .entries li { padding: 8px 0; }

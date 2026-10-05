@@ -99,7 +99,7 @@ export const publications: Publication[] = [
     links: [
       { label: 'arXiv', href: 'https://arxiv.org/abs/2512.00482' },
       { label: 'Code', href: 'https://github.com/YairAmar/SE-Probe' },
-      { label: 'Interactive demo', href: 'https://yairamar.github.io/seint-show-web/' },
+      { label: 'Demo', href: 'https://yairamar.github.io/seint-show-web/' },
     ],
   },
   {
