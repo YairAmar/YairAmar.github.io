@@ -2,7 +2,7 @@
 
 export const profile = {
   name: 'Yair Amar',
-  title: 'Member of Technical Staff, Accomplish · MSc student, Technion',
+  title: ['Member of Technical Staff, Accomplish', 'MSc student, Technion'],
   // Put a square image at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: null as string | null,
   bio: [
