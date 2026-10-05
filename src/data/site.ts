@@ -20,7 +20,6 @@ export const profile = {
 export const interests: { label: string; href?: string }[] = [
   { label: 'Deep learning for speech', href: '#speech-probing' },
   { label: 'AI agents and coding agents', href: '#hardening-tax' },
-  { label: 'Self-improving agents' },
 ];
 
 // tag marks which line of work an item belongs to.
