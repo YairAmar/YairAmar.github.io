@@ -16,10 +16,10 @@ export const profile = {
   ],
 };
 
-// Each interest links to related work. Leave href out to show a plain chip.
+// Each interest jumps to the related publication on this page (its id). Leave href out to show a plain chip.
 export const interests: { label: string; href?: string }[] = [
-  { label: 'Deep learning for speech', href: 'https://arxiv.org/abs/2512.00482' },
-  { label: 'AI agents and coding agents', href: 'https://arxiv.org/abs/2608.02670' },
+  { label: 'Deep learning for speech', href: '#speech-probing' },
+  { label: 'AI agents and coding agents', href: '#hardening-tax' },
   { label: 'Self-improving agents' },
 ];
 
@@ -58,6 +58,7 @@ export const news: NewsItem[] = [
 
 export type Link = { label: string; href: string };
 export type Publication = {
+  id: string;
   title: string;
   authors: string[];
   venue: string;
@@ -70,6 +71,7 @@ export const me = 'Yair Amar';
 
 export const publications: Publication[] = [
   {
+    id: 'hardening-tax',
     title: 'The Hardening Tax: Policy-Graded Evaluation of Coding Agents under Enterprise Security Constraints',
     authors: ['Yair Amar*', 'Dotan Davidovich*', 'Hai Rozencwajg*', 'Or Hiltch', 'Ravid Shwartz-Ziv'],
     venue: 'NeurIPS 2026 Workshop on Agents in the Wild',
@@ -82,6 +84,7 @@ export const publications: Publication[] = [
     ],
   },
   {
+    id: 'speech-probing',
     title: 'Probing Layer-Wise Robustness and Sensitivity of Speech Enhancement Models',
     authors: ['Yair Amar', 'Amir Ivry', 'Israel Cohen'],
     venue: 'arXiv preprint arXiv:2512.00482',
@@ -94,6 +97,7 @@ export const publications: Publication[] = [
     ],
   },
   {
+    id: 'icassp-demo',
     title: 'Speech Enhancement Intelligence: Inspecting a Model Under Controlled Degradation',
     authors: ['Yair Amar', 'Amir Ivry', 'Israel Cohen'],
     venue: 'ICASSP 2026 Show & Tell demo, Barcelona',
@@ -105,24 +109,27 @@ export const publications: Publication[] = [
   },
 ];
 
-export type Entry = { title: string; org?: string; when: string; detail?: string };
+export type Entry = { title: string; org?: string; icon?: string; when: string; detail?: string };
 
 export const experience: Entry[] = [
   {
     title: 'Member of Technical Staff',
     org: 'Accomplish',
+    icon: '/logos/accomplish.png',
     when: 'Mar 2026 to present',
     detail: 'Evaluation of coding agents under enterprise security policy.',
   },
   {
     title: 'Senior Research Scientist',
     org: 'Innovation Center, Sheba Medical Center',
+    icon: '/logos/sheba.png',
     when: 'Until Mar 2026',
     detail: 'Machine learning on medical data.',
   },
   {
     title: 'Data Scientist',
     org: 'Defence industry',
+    icon: '/logos/stealth.svg',
     when: '2020 to 2026',
   },
 ];

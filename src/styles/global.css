@@ -6,6 +6,8 @@
   --border: #e2dfd7;
   --accent: #1f4e79;
   --accent-soft: #e4edf6;
+  --card: rgba(251, 250, 247, 0.9);
+  --pano-h: min(60vh, 480px);
   --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color-scheme: light;
@@ -20,11 +22,13 @@
     --border: #2c2f33;
     --accent: #8fb8e0;
     --accent-soft: #1d2a37;
+    --card: rgba(19, 20, 22, 0.88);
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
+  --card: rgba(19, 20, 22, 0.88);
   --bg: #131416;
   --surface: #1d1f22;
   --text: #e8e6e1;
@@ -37,6 +41,9 @@
 
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 body {
   margin: 0;
   background: var(--bg);
@@ -48,17 +55,44 @@ body {
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
+/* Panorama pinned behind the top of the page */
+.backdrop {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--pano-h);
+  overflow: hidden;
+  z-index: -1;
+}
+.backdrop img {
+  display: block;
+  height: calc(var(--pano-h) + 40px);
+  width: auto;
+  max-width: none;
+  will-change: transform;
+}
+.backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, var(--bg));
+}
+
 .layout {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 72px 32px 48px;
+  max-width: 1104px;
+  margin: calc(var(--pano-h) - 140px) auto 48px;
+  padding: 56px 64px 40px;
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 64px;
 }
 
 /* Profile column */
-.profile { position: sticky; top: 72px; align-self: start; }
+.profile { position: sticky; top: 40px; align-self: start; }
 
 .headshot {
   display: block;
@@ -112,7 +146,7 @@ h2 {
   font-size: 14px;
   font-weight: 500;
 }
-.chips a::after { content: ' \2197'; font-size: 12px; }
+.chips a::after { content: ' \2193'; font-size: 12px; }
 .chips a:hover { border-color: var(--accent); text-decoration: none; }
 
 .news { list-style: none; padding: 0; margin: 0; }
@@ -127,6 +161,8 @@ h2 {
 .pubs { list-style: none; padding: 0; margin: 0; }
 .pubs li { padding: 14px 0; border-bottom: 1px solid var(--border); }
 .pubs li:last-child { border-bottom: 0; }
+.pubs li { scroll-margin-top: 24px; border-radius: 10px; transition: background-color 0.6s; }
+.pubs li:target { background: var(--accent-soft); box-shadow: 0 0 0 12px var(--accent-soft); }
 .pubs p { margin: 0; }
 .pub-title { font-weight: 600; line-height: 1.45; }
 .authors { color: var(--muted); font-size: 15px; margin-top: 3px !important; }
@@ -145,6 +181,20 @@ h2 {
 
 .entries { list-style: none; padding: 0; margin: 0; }
 .entries li { padding: 8px 0; }
+.entries li.with-icon { display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; }
+.entry-body { flex: 1; min-width: 0; }
+.entry-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.entry-icon img { width: 30px; height: 30px; object-fit: contain; }
 .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
 .entry-title { font-weight: 600; flex: 1 1 auto; min-width: 0; }
 .org { font-weight: 400; color: var(--muted); }
@@ -154,7 +204,7 @@ h2 {
 footer { color: var(--muted); font-size: 13px; padding-top: 8px; }
 
 @media (max-width: 800px) {
-  .layout { grid-template-columns: 1fr; gap: 40px; padding: 40px 16px 32px; }
+  .layout { grid-template-columns: 1fr; gap: 40px; padding: 32px 16px 28px; margin: calc(var(--pano-h) - 100px) 0 0; border-radius: 20px 20px 0 0; }
   .profile { position: static; text-align: center; }
   .headshot { width: 132px; height: 132px; margin: 0 auto 20px; }
   .headshot.placeholder { font-size: 36px; }

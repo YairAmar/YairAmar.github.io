@@ -27,6 +27,9 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
     />
   </head>
   <body>
+    <div class="backdrop" aria-hidden="true">
+      <img id="pano" src="/hike.webp" alt="" width="1600" height="381" />
+    </div>
     <div class="layout">
       <aside class="profile">
         {profile.headshot ? (
@@ -68,7 +71,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <h2>Publications</h2>
           <ol class="pubs">
             {publications.map((p) => (
-              <li>
+              <li id={p.id}>
                 <p class="pub-title">{p.title}</p>
                 <p class="authors">
                   {p.authors.map((a, i) => (
@@ -92,12 +95,15 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <h2>Experience</h2>
           <ul class="entries">
             {experience.map((e) => (
-              <li>
-                <div class="entry-head">
-                  <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
-                  {e.when && <span class="when">{e.when}</span>}
+              <li class="with-icon">
+                <span class="entry-icon">{e.icon && <img src={e.icon} alt="" width="40" height="40" loading="lazy" />}</span>
+                <div class="entry-body">
+                  <div class="entry-head">
+                    <span class="entry-title">{e.title}{e.org && <span class="org">, {e.org}</span>}</span>
+                    {e.when && <span class="when">{e.when}</span>}
+                  </div>
+                  {e.detail && <p class="detail">{e.detail}</p>}
                 </div>
-                {e.detail && <p class="detail">{e.detail}</p>}
               </li>
             ))}
           </ul>
@@ -121,5 +127,24 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
         <footer>Last updated {new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</footer>
       </main>
     </div>
+    <script is:inline>
+      // Pan the panorama from left to right as the page scrolls.
+      (() => {
+        const img = document.getElementById('pano');
+        if (!img || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        let queued = false;
+        const update = () => {
+          queued = false;
+          const max = document.documentElement.scrollHeight - innerHeight;
+          const progress = max > 0 ? Math.min(scrollY / max, 1) : 0;
+          const range = Math.max(img.offsetWidth - innerWidth, 0);
+          img.style.transform = `translate3d(${-progress * range}px, ${-progress * 40}px, 0)`;
+        };
+        const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+        addEventListener('scroll', queue, { passive: true });
+        addEventListener('resize', queue);
+        if (img.complete) update(); else img.addEventListener('load', update);
+      })();
+    </script>
   </body>
 </html>
