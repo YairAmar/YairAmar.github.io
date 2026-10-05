@@ -6,8 +6,8 @@ export const profile = {
   // Put a square image at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: null as string | null,
   bio: [
-    'I am a Member of Technical Staff at Accomplish, where I study how coding agents behave when enterprise security policy restricts what they can do. I am also an MSc student in Electrical Engineering at the Technion, advised by Dr. Amir Ivry and Prof. Israel Cohen. My thesis probes the internal representations of deep speech enhancement models.',
-    'My work has moved between research areas in short order: from defence, to speech, to medical data at the Sheba Medical Center Innovation Center, and now to coding agents. Each move meant learning a new field fast, and that is the part of research I enjoy most.',
+    'I am a Technion graduate in Electrical Engineering and Physics. I do my best work in fast-moving environments where priorities shift quickly, and I enjoy picking up a new subject and getting deep into it. I am driven by work that delivers real value and impact. I am a team player at heart, and I enjoy working with bright, quick-thinking people.',
+    'Today I am a Member of Technical Staff at Accomplish, where I study how coding agents behave when enterprise security policy restricts what they can do. I am also an MSc student in Electrical Engineering at the Technion, advised by Dr. Amir Ivry and Prof. Israel Cohen. My thesis probes the internal representations of deep speech enhancement models. My path here moved between research areas in short order: from the defence industry, to speech, to medical data at the Sheba Medical Center Innovation Center, and now to coding agents.',
   ],
   links: [
     { label: 'Email', href: 'mailto:yairamr@gmail.com', text: 'yairamr@gmail.com' },
