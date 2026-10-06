@@ -10,7 +10,7 @@ export const seo = {
 
 export const profile = {
   name: 'Yair Amar',
-  title: ['Member of Technical Staff, Accomplish', 'MSc student, Technion'],
+  title: ['Member of Technical Staff @ Accomplish', 'MSc student @ Technion'],
   // Put a square image at public/headshot.jpg and set this to '/headshot.jpg'.
   headshot: '/headshot.jpg' as string | null,
   bio: [
