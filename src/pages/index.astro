@@ -36,6 +36,7 @@ const jsonLd = {
       '@type': 'Person',
       '@id': `${seo.url}#person`,
       name: profile.name,
+      alternateName: seo.alternateName,
       url: seo.url,
       image: abs(profile.headshot ?? seo.ogImage),
       email: linkOf('Email'),
@@ -45,7 +46,7 @@ const jsonLd = {
       affiliation: { '@type': 'CollegeOrUniversity', name: 'Technion, Israel Institute of Technology', url: 'https://www.technion.ac.il' },
       alumniOf: { '@type': 'CollegeOrUniversity', name: 'Technion, Israel Institute of Technology' },
       knowsAbout: seo.knowsAbout,
-      sameAs: ['GitHub', 'LinkedIn', 'Google Scholar'].map(linkOf).filter(Boolean),
+      sameAs: [...['GitHub', 'LinkedIn', 'Google Scholar'].map(linkOf).filter(Boolean), ...seo.sameAs],
     },
     ...publications.map((p) => ({
       '@type': 'ScholarlyArticle',
@@ -54,7 +55,7 @@ const jsonLd = {
       abstract: stripTags(p.abstract),
       author: p.authors.map(author),
       datePublished: String(p.year),
-      isPartOf: p.venue,
+      isPartOf: { '@type': 'CreativeWork', name: p.venue },
       url: p.links.find((l) => l.label === 'arXiv')?.href ?? p.links[0]?.href,
     })),
   ],
@@ -160,7 +161,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           <ol class="pubs">
             {publications.map((p) => (
               <li id={p.id}>
-                <p class="pub-title">{p.title}</p>
+                <h3 class="pub-title">{p.title}</h3>
                 <p class="authors">
                   {p.authors.map((a, i) => (
                     <>

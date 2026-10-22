@@ -3,8 +3,11 @@
 export const seo = {
   url: 'https://yairamar.github.io/',
   title: 'Yair Amar | Research Scientist, Speech and AI Agents',
-  description: 'Yair Amar is a research scientist at Accomplish working on safe, performant AI coding agents, and a Technion MSc student probing speech enhancement models.',
+  description: 'Yair Amar is a research scientist and member of technical staff at Accomplish, working on AI coding agents, and a Technion MSc student in speech enhancement.',
   ogImage: '/og.jpg',
+  alternateName: 'יאיר עמר', // Hebrew name, kept in structured data and llms.txt only
+  // Profiles listed in structured data but not shown on the page.
+  sameAs: ['https://orcid.org/0009-0000-3547-8512'],
   knowsAbout: ['Speech enhancement', 'Deep learning', 'Interpretability', 'AI agents', 'Coding agents', 'Agent security', 'Benchmarking'],
 };
 

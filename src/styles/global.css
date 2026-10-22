@@ -165,7 +165,7 @@ h2 {
 .pubs li { scroll-margin-top: 24px; border-radius: 10px; transition: background-color 0.6s; }
 .pubs li:target { background: var(--accent-soft); box-shadow: 0 0 0 12px var(--accent-soft); }
 .pubs p { margin: 0; }
-.pub-title { font-weight: 600; line-height: 1.45; }
+.pub-title { font-size: inherit; font-weight: 600; line-height: 1.45; margin: 0; }
 .authors { color: var(--muted); font-size: 15px; margin-top: 3px !important; }
 .authors strong { color: var(--text); font-weight: 600; }
 .venue { font-style: italic; font-size: 15px; }
