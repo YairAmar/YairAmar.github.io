@@ -12,9 +12,7 @@ git add -A
 if git diff --cached --quiet; then
   echo "nothing to commit"
 else
-  git commit -q -m "$MSG
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
+  git commit -q -m "$MSG"
 fi
 git push -q origin main
 SHA="$(git rev-parse HEAD)"
