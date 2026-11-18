@@ -1,0 +1,75 @@
+---
+import { analytics } from '../data/site';
+---
+
+<script is:inline define:vars={{ key: analytics.posthogKey, host: analytics.posthogHost }}>
+  window.__posthog = { key, host };
+</script>
+<script>
+    import posthog from 'posthog-js';
+
+    const MAX_EVENTS_PER_PAGE = 30;
+    const REPEAT_WINDOW_MS = 2000;
+    const custom = new Set(['link_clicked', 'abstract_toggled', 'interest_clicked']);
+
+    const params = new URLSearchParams(location.search);
+    try {
+      if (params.has('notrack')) localStorage.setItem('notrack', '1');
+      if (params.has('track')) localStorage.removeItem('notrack');
+    } catch {}
+    const optedOut = (() => { try { return localStorage.getItem('notrack') === '1'; } catch { return false; } })();
+
+    const { key, host } = (window as any).__posthog;
+    if (!navigator.webdriver && !optedOut) {
+      let sent = 0;
+      const lastSeen = new Map<string, number>();
+      posthog.init(key, {
+        api_host: host,
+        persistence: 'memory',
+        autocapture: false,
+        capture_pageview: true,
+        capture_pageleave: true,
+        disable_session_recording: true,
+        disable_surveys: true,
+        before_send: (event) => {
+          if (!event || !custom.has(event.event)) return event;
+          const id = `${event.event}:${event.properties?.label ?? event.properties?.paper ?? ''}`;
+          const now = Date.now();
+          if (now - (lastSeen.get(id) ?? 0) < REPEAT_WINDOW_MS) return null;
+          lastSeen.set(id, now);
+          if (++sent > MAX_EVENTS_PER_PAGE) return null;
+          return event;
+        },
+      });
+
+      const context = (el: Element) => ({
+        section: el.closest('section[id]')?.id ?? (el.closest('aside') ? 'profile' : 'other'),
+        paper: el.closest('#publications li[id]')?.id,
+      });
+
+      document.addEventListener('click', (e) => {
+        const a = (e.target as Element).closest?.('a[href]') as HTMLAnchorElement | null;
+        if (!a) return;
+        const href = a.getAttribute('href') ?? '';
+        const label = a.dataset.track ?? a.textContent?.trim() ?? '';
+        if (href.startsWith('#')) {
+          if (a.closest('.chips')) posthog.capture('interest_clicked', { label, target: href.slice(1) });
+          return;
+        }
+        const url = new URL(a.href);
+        if (url.protocol !== 'mailto:' && url.host === location.host && url.pathname === '/') return;
+        posthog.capture('link_clicked', {
+          label,
+          ...context(a),
+          domain: url.protocol === 'mailto:' ? 'email' : url.host,
+          href: url.protocol === 'mailto:' ? 'mailto' : a.href,
+        });
+      });
+
+      document.querySelectorAll('details.abstract').forEach((d) => {
+        d.addEventListener('toggle', () => {
+          posthog.capture('abstract_toggled', { ...context(d), open: (d as HTMLDetailsElement).open });
+        });
+      });
+    }
+</script>

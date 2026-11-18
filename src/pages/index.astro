@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
 import {
-  profile, interests, news, publications, me, experience, education, people, seo,
+  profile, interests, news, publications, me, experience, education, people, seo, analytics,
 } from '../data/site';
+import Analytics from '../components/Analytics.astro';
 
 // 24x24 icon paths for the contact links, keyed by link label.
 const icons: Record<string, string> = {
@@ -101,6 +102,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
       rel="stylesheet"
     />
+    {analytics.posthogKey && <Analytics />}
   </head>
   <body>
     <div class="backdrop" aria-hidden="true">
@@ -128,7 +130,7 @@ const initials = profile.name.split(' ').map((p) => p[0]).join('');
           {profile.links.map((l) => (
             <li>
               <svg class="link-icon" viewBox="0 0 24 24" role="img" aria-label={l.label}><path d={icons[l.label]} /></svg>
-              <a href={l.href}>{l.text}</a>
+              <a href={l.href} data-track={l.label}>{l.text}</a>
             </li>
           ))}
         </ul>

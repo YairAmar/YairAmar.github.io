@@ -1,5 +1,11 @@
 // All page content lives here. Edit this file to update the site.
 
+// PostHog project key (public by design). Empty disables tracking entirely.
+export const analytics = {
+  posthogKey: '',
+  posthogHost: 'https://us.i.posthog.com',
+};
+
 export const seo = {
   url: 'https://yairamar.github.io/',
   title: 'Yair Amar | Research Scientist, Speech and AI Agents',
