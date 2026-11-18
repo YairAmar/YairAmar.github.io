@@ -11,7 +11,7 @@ export function GET() {
   const entries = (list: typeof experience) =>
     list.map((e) => `- ${e.title}${e.org ? `, ${e.org}` : ''}${e.when ? `, ${e.when}` : ''}`);
 
-  const body = `# ${profile.name}
+  const body = `# ${profile.name} (${seo.alternateName})
 
 > ${seo.description}
 
