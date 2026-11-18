@@ -6,12 +6,12 @@ set -euo pipefail
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
 OUT="${1:-/tmp/site-shots}"
 SEL="${2:-}"
-PORT=4329
+PORT="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
 mkdir -p "$OUT"
 cd "$ROOT"
 
 npx astro build >/dev/null
-npx astro preview --port "$PORT" >/dev/null 2>&1 &
+python3 -m http.server "$PORT" --bind 127.0.0.1 -d dist >/dev/null 2>&1 &
 SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
 until curl -sf "http://localhost:$PORT/" >/dev/null; do sleep 0.5; done
