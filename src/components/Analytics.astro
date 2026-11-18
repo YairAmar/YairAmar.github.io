@@ -8,8 +8,11 @@ import { analytics } from '../data/site';
 <script>
     import posthog from 'posthog-js';
 
-    const MAX_EVENTS_PER_PAGE = 30;
+    const MAX_EVENTS_PER_PAGE = 20;
     const REPEAT_WINDOW_MS = 2000;
+    const HOUR = 3600_000;
+    const DAY = 24 * HOUR;
+    const LIMITS = { viewsPerHour: 10, viewsPerDay: 30, clicksPerDay: 60, blockFor: DAY };
     const custom = new Set(['link_clicked', 'abstract_toggled', 'interest_clicked']);
 
     const params = new URLSearchParams(location.search);
@@ -19,8 +22,33 @@ import { analytics } from '../data/site';
     } catch {}
     const optedOut = (() => { try { return localStorage.getItem('notrack') === '1'; } catch { return false; } })();
 
+    const budget = (() => {
+      const now = Date.now();
+      let state = { views: [] as number[], clicks: [] as number[], blockedUntil: 0 };
+      try { state = { ...state, ...JSON.parse(localStorage.getItem('ph_budget') ?? '{}') }; } catch {}
+      const save = () => { try { localStorage.setItem('ph_budget', JSON.stringify(state)); } catch {} };
+      state.views = state.views.filter((t) => now - t < DAY);
+      state.clicks = state.clicks.filter((t) => now - t < DAY);
+      const block = () => { state.blockedUntil = Date.now() + LIMITS.blockFor; save(); };
+      return {
+        allowView() {
+          if (state.blockedUntil > now) return false;
+          const lastHour = state.views.filter((t) => now - t < HOUR).length;
+          if (lastHour >= LIMITS.viewsPerHour || state.views.length >= LIMITS.viewsPerDay) { block(); return false; }
+          state.views.push(now); save();
+          return true;
+        },
+        allowClick() {
+          if (state.blockedUntil > Date.now()) return false;
+          if (state.clicks.length >= LIMITS.clicksPerDay) { block(); return false; }
+          state.clicks.push(Date.now()); save();
+          return true;
+        },
+      };
+    })();
+
     const { key, host } = (window as any).__posthog;
-    if (!navigator.webdriver && !optedOut) {
+    if (!navigator.webdriver && !optedOut && budget.allowView()) {
       let sent = 0;
       const lastSeen = new Map<string, number>();
       posthog.init(key, {
@@ -37,7 +65,7 @@ import { analytics } from '../data/site';
           const now = Date.now();
           if (now - (lastSeen.get(id) ?? 0) < REPEAT_WINDOW_MS) return null;
           lastSeen.set(id, now);
-          if (++sent > MAX_EVENTS_PER_PAGE) return null;
+          if (++sent > MAX_EVENTS_PER_PAGE || !budget.allowClick()) return null;
           return event;
         },
       });

@@ -2,7 +2,7 @@
 
 // PostHog project key (public by design). Empty disables tracking entirely.
 export const analytics = {
-  posthogKey: '',
+  posthogKey: 'phc_t68D86Riup3vfECHpXXKZcRinzdtu8BUZiqzrDDBHRDe',
   posthogHost: 'https://us.i.posthog.com',
 };
 
